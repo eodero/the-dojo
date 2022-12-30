@@ -17,23 +17,23 @@ export const authReducer = (state, action) => {
 }
 
 export const AuthContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(authReducer, { 
+  const [state, dispatch] = useReducer(authReducer, {
     user: null,
     authIsReady: false
   })
 
   useEffect(() => {
     const unsub = projectAuth.onAuthStateChanged(user => {
-      dispatch({ type: 'AUTH_IS_READY', payload: user })
+      dispatch({ type: 'AUTH_IS_READY', payload: user }) //we only want to render the component when Auth is ready
       unsub()
     })
   }, [])
 
   console.log('AuthContext state:', state)
-  
+
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>
-      { children }
+      {children}
     </AuthContext.Provider>
   )
 
